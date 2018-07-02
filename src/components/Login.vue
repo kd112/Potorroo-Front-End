@@ -2,6 +2,7 @@
 <template>
       <v-container app align-baseline>
           <div class="form-ui">
+            <v-icon x-large>layers</v-icon>
             <h1>POTOROO</h1>
             <v-form action="" class="login-form">
                     <v-text-field

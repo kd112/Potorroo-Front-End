@@ -6,10 +6,11 @@ import Vuetify from 'vuetify'
 import router from './router'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'font-awesome/css/font-awesome.css'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify, {
-  iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
+  iconfont: 'mdi' || 'fa' //'md' || 'mdi' || 'fa' || 'fa4'
 })
 /* eslint-disable no-new */
 new Vue({
