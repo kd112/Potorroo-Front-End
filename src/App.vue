@@ -1,21 +1,19 @@
 <template>
   <div id="app">
     <v-app dark>
-      <!-- <div class="login-container"> -->
-        <login/>
-      <!-- </div> -->
+        <router-view/>
     </v-app>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld'
-import login from './components/Login'
+// import login from './components/Login'
 export default {
-  name: 'App',
-  components: {
-    login
-  }
+  name: 'App'
+  // components: {
+  //   login
+  // }
 }
 </script>
 
