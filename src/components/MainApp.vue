@@ -9,6 +9,18 @@
       v-model="drawer"
       app
     >
+    <v-list dense>
+        <v-list-tile  @click="logout">
+          <v-list-tile-action>
+            <v-icon>power_settings_new</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Logout
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+    </v-list>
       <!-- <v-list dense>
         <v-list-tile v-for="item in items" :key="item.text" @click="">
           <v-list-tile-action>
@@ -93,6 +105,11 @@
 <script>
 export default {
   name: 'MainApp',
+  methods: {
+    logout(){
+      this.$router.push('/')
+    }
+  },
   data: () => ({
       drawer: true,
       items: [

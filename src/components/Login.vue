@@ -40,7 +40,8 @@ export default {
           username:this.username,
           password:this.password
         })
-      console.log(router.push)     
+      if (result.status===200)this.$router.push('/app')
+      else alert("Invalid username password")    
     }
   }
 }
