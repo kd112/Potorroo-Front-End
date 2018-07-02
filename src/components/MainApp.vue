@@ -10,7 +10,7 @@
       app
     >
     <v-list dense>
-        <v-list-tile  v-for="item in items" :key="item.text" @click="item.action">
+        <v-list-tile  v-for="(item,index) in items" :key="item.text" @click='tileClicked(index)'>
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
@@ -48,35 +48,69 @@
         ></v-text-field>
       </v-layout>
     </v-toolbar>
+    <v-content>
+      <v-container fill-height>
+        <component :is="tabClicked" v-bind='props_data'></component>
+        <!-- <div v-show="!currentComponent"></div> -->
+      </v-container>
+    </v-content>
   </v-app>
 </template>
 
 <script>
+import profile from '@/components/user-components/profile.vue'
+import map_component from '@/components/map-components/map.vue'
+import vue_modal from '@/components/Misc-Components/modal.vue'
+// console.log(map)
 export default {
   name: 'MainApp',
+  components:{
+    profile,
+    map_component,
+    vue_modal
+  },
   methods: {
     logout(){
       this.$router.push('/')
+    },
+    tileClicked(index){
+      let tab = this.items[index]
+      this.currentComponent = tab.component
+      if (tab.action==='login')this.props_data={title:"Logout",message:"Do you wish to logout?"}
     }
+    // swapComponent(){
+    //   console.log("component")
+    // }
   },
+  computed:{
+        tabClicked(){
+          console.log(this.currentComponent)
+          return this.currentComponent
+        }
+      },
   data: () => ({
       drawer: true,
+      currentComponent:null,
       items: [
         {
           text:"My Profile",
           icon:'fa-user',
-          action:""
+          action:"user",
+          component:"profile"
         },
         {
           text:"My Maps",
           icon:"fa-map",
-          action:""
+          action:"map",
+          component:"map_component"
           },
         {
           text:"Logout",
           icon:"power_settings_new",
-          action:"logout"
-        }]
+          action:"logout",
+          component:'vue_modal'
+        }],
+      props_data:{}
     }),
     props: {
       source: String
