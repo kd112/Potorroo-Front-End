@@ -49,7 +49,7 @@
       </v-layout>
     </v-toolbar>
     <v-content>
-      <v-container fill-height>
+      <v-container fluid fill-height>
         <component :is="tabClicked" v-bind='props_data'></component>
         <!-- <div v-show="!currentComponent"></div> -->
       </v-container>
