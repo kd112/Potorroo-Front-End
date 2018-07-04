@@ -25,7 +25,7 @@
     <!-- <div></div> -->
 </template>
 <script>
-import AuthenticationService from '@/services/AuthenticationServices'
+// import AuthenticationService from '@/services/AuthenticationServices'
 export default {
   name: 'login',
   data () {
@@ -37,10 +37,12 @@ export default {
   },
   methods: {
     async submit () {
-      let result = await AuthenticationService.authenticate({
+      let result = await this.$services.authenticationService.authenticate({
           username:this.username,
           password:this.password
         })
+    //   console.log(result.data)
+      this.$cookies.set('potorroo-ui',result.data)
       if (result.status===200)this.$router.push('/app')
       else alert("Invalid username password")    
     }

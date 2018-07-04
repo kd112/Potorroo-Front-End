@@ -10,7 +10,11 @@
 // import HelloWorld from './components/HelloWorld'
 // import login from './components/Login'
 export default {
-  name: 'App'
+  name: 'App',
+  // mounted(){
+  //   console.log("my plugins",this.$services)
+  //   console.log("cookies",this.$cookies)
+  // }
   // components: {
   //   login
   // }

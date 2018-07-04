@@ -9,8 +9,12 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'font-awesome/css/font-awesome.css'
 import VueLayers from 'vuelayers'
 import 'vuelayers/lib/style.css'
+import cookies from 'vue-cookies';
+import Potoroo from './plugin/index';
 
 Vue.use(VueLayers)
+Vue.use(cookies)
+Vue.use(Potoroo)
 Vue.config.productionTip = false
 
 Vue.use(Vuetify, {
