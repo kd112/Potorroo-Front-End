@@ -20,6 +20,13 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <div style="height:100%;"></div>
+        <v-list-tile @click="logout">
+          <v-list-tile-action>
+            <v-icon color="grey darken-1">power_settings_new</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title class="grey--text text--darken-1">Logout</v-list-tile-title>
+        </v-list-tile>
     </v-list>
     </v-navigation-drawer>
     <v-toolbar
@@ -64,10 +71,44 @@ import vue_modal from '@/components/Misc-Components/modal.vue'
 // console.log(map)
 export default {
   name: 'MainApp',
+  props:["isAdmin"],
   components:{
     profile,
     map_component,
     vue_modal
+  },
+  beforeMount(){
+    console.log("before Mount")
+  },
+  beforeMount(){
+    if(this.$cookies.get('potorroo-ui')){
+      let cookie =this.$cookies.get('potorroo-ui') 
+      // console.log("cookie",cookie)
+        try{
+          let user = this.$jwt.decode(cookie)
+          if (user.isAdmin){
+            this.items.push({
+              text:"Manage Maps",
+              icon:"fa-globe",
+              action:"",
+              component:"",
+            })
+            this.items.push({
+              text:"Manage Users",
+              icon:"fa-users",
+              action:"",
+              component:"",
+            })
+          }
+        }catch(error){
+          this.$router.push('/')
+          alert(error)
+        }
+      
+
+    }else{
+      this.$router.push('/')
+    }
   },
   methods: {
     logout(){
@@ -104,12 +145,12 @@ export default {
           action:"map",
           component:"map_component"
           },
-        {
-          text:"Logout",
-          icon:"power_settings_new",
-          action:"logout",
-          component:'vue_modal'
-        }],
+        // {
+        //   text:"Logout",
+        //   icon:"power_settings_new",
+        //   action:"logout",
+        //   component:'vue_modal'
+        ],
       props_data:{}
     }),
     props: {
@@ -133,5 +174,8 @@ li {
 }
 a {
   color: #42b983;
+}
+i:hover{
+  color:white;
 }
 </style>

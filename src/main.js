@@ -11,10 +11,12 @@ import VueLayers from 'vuelayers'
 import 'vuelayers/lib/style.css'
 import cookies from 'vue-cookies';
 import Potoroo from './plugin/index';
+import VueJWT from 'vuejs-jwt'
 
 Vue.use(VueLayers)
 Vue.use(cookies)
 Vue.use(Potoroo)
+Vue.use(VueJWT)
 Vue.config.productionTip = false
 
 Vue.use(Vuetify, {
