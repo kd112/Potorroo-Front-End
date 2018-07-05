@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app dark>
+    <v-app class="grey darken-1" >
         <router-view/>
     </v-app>
   </div>

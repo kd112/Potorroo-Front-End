@@ -1,12 +1,13 @@
 <template>
   <v-app
-    dark
+    light
     id="inspire"
-  >
+    >
     <v-navigation-drawer
       fixed
       clipped
       v-model="drawer"
+      class="grey darken-1"
       app
     >
     <v-list dense>
@@ -15,7 +16,7 @@
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>
+            <v-list-tile-title class='white--text'>
               {{item.text}}
             </v-list-tile-title>
           </v-list-tile-content>
@@ -23,25 +24,25 @@
         
         <v-list-tile @click="logout">
           <v-list-tile-action>
-            <v-icon color="grey darken-1">power_settings_new</v-icon>
+            <v-icon color="red">power_settings_new</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title class="grey--text text--darken-1">Logout</v-list-tile-title>
+          <v-list-tile-title class="white--text">Logout</v-list-tile-title>
         </v-list-tile>
     </v-list>
     </v-navigation-drawer>
     <v-toolbar
-      color="black"
+      color="grey darken-1"
       dense
       fixed
       clipped-left
       app
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer">
-      <v-icon class="mx-3">menu</v-icon>
+      <v-icon class="mx-3" color="white">menu</v-icon>
       </v-toolbar-side-icon>
-      <v-icon class="mx-3">layers</v-icon>
+      <v-icon class="mx-3" color="white">layers</v-icon>
       <v-toolbar-title class="mr-5 align-center">
-        <span class="title">Potoroo</span>
+        <span class="title white--text">Potoroo</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-layout row align-center style="max-width: 650px">
@@ -52,6 +53,7 @@
           :append-icon-cb="() => {}"
           color="white"
           hide-details
+          dark
         ></v-text-field>
       </v-layout>
     </v-toolbar>

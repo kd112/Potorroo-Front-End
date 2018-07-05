@@ -1,22 +1,26 @@
 /* eslint-disable */
 <template>
-      <v-container app align-baseline>
+      <v-container app align-baseline >
           <div class="form-ui">
-            <v-icon x-large>layers</v-icon>
+            <v-icon x-large color="white">layers</v-icon>
             <h1>POTOROO</h1>
             <v-form action="" class="login-form">
-                    <v-text-field
-                        label='User Name'
-                        v-model="username"
-                    ></v-text-field>
-                    <v-text-field
-                    label='Password'
-                    :type="'password'"
-                    v-model="password"
-                    ></v-text-field>
+                <v-flex class="align-content-space-around">
+                        <v-text-field
+                            dark
+                            label='User Name'
+                            v-model="username"
+                        ></v-text-field>
+                        <v-text-field
+                        dark
+                        label='Password'
+                        :type="'password'"
+                        v-model="password"
+                        ></v-text-field>
+                </v-flex>
                 <div class="input-div">
                     <v-flex class="align-content-space-around">
-                        <v-btn outline  @click="submit">Login</v-btn>
+                        <v-btn class="white grey-darken-1--text"  @click="submit">Login</v-btn>
                     </v-flex>
                 </div>
             </v-form>
