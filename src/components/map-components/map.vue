@@ -21,7 +21,8 @@
 import MapDetails from './map-details'
 import MapRenderer from './map-renderer'
   export default {
-    components:{MapDetails,MapRenderer}
+    components:{MapDetails,MapRenderer},
+    props:['componentData'],
   }
 </script>
 <style>

@@ -57,7 +57,7 @@
     </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
-        <component :is="tabClicked" v-bind='props_data'></component>
+        <component :is="tabClicked" v-bind:data='componentData.data'></component>
         <!-- <div v-show="!currentComponent"></div> -->
       </v-container>
     </v-content>
@@ -86,18 +86,21 @@ export default {
       // console.log("cookie",cookie)
         try{
           let user = this.$jwt.decode(cookie)
+          this.items[0].data = user
           if (user.isAdmin){
             this.items.push({
               text:"Manage Maps",
               icon:"fa-globe",
               action:"",
               component:"",
+              data:{}
             })
             this.items.push({
               text:"Manage Users",
               icon:"fa-users",
               action:"",
               component:"",
+              data:{}
             })
           }
         }catch(error){
@@ -112,11 +115,13 @@ export default {
   },
   methods: {
     logout(){
+      this.$cookies.remove('potorroo-ui')
       this.$router.push('/')
     },
     tileClicked(index){
       let tab = this.items[index]
       this.currentComponent = tab.component
+      this.componentData.data = tab.data
       if (tab.action==='login')this.props_data={title:"Logout",message:"Do you wish to logout?"}
     }
     // swapComponent(){
@@ -132,18 +137,22 @@ export default {
   data: () => ({
       drawer: true,
       currentComponent:null,
+      componentData:{data:null},
+      user:null,
       items: [
         {
           text:"My Profile",
           icon:'fa-user',
           action:"user",
-          component:"profile"
+          component:"profile",
+          data:this.user
         },
         {
           text:"My Maps",
           icon:"fa-map",
           action:"map",
-          component:"map_component"
+          component:"map_component",
+          data:this.user
           },
         // {
         //   text:"Logout",
