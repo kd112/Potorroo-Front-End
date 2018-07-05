@@ -36,7 +36,7 @@ export default {
     }
   },
   beforeMount() {
-      let cookie = this.$cookies.get('potorroo-ui')
+      let cookie = this.$cookies.get('potorroo-ui',{expires:60*60*24})
       if (cookie){
           this.$router.push('/app')
       }
