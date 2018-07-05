@@ -20,7 +20,7 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <div style="height:100%;"></div>
+        
         <v-list-tile @click="logout">
           <v-list-tile-action>
             <v-icon color="grey darken-1">power_settings_new</v-icon>
@@ -71,14 +71,10 @@ import vue_modal from '@/components/Misc-Components/modal.vue'
 // console.log(map)
 export default {
   name: 'MainApp',
-  props:["isAdmin"],
   components:{
     profile,
     map_component,
     vue_modal
-  },
-  beforeMount(){
-    console.log("before Mount")
   },
   beforeMount(){
     if(this.$cookies.get('potorroo-ui')){
@@ -103,6 +99,7 @@ export default {
               data:{}
             })
           }
+          this.user=user
         }catch(error){
           this.$router.push('/')
           alert(error)
@@ -120,6 +117,8 @@ export default {
     },
     tileClicked(index){
       let tab = this.items[index]
+      this.appinfo = tab.props_data
+      console.log(this.appinfo)
       this.currentComponent = tab.component
       this.componentData.data = tab.data
       if (tab.action==='login')this.props_data={title:"Logout",message:"Do you wish to logout?"}
@@ -130,7 +129,7 @@ export default {
   },
   computed:{
         tabClicked(){
-          console.log(this.currentComponent)
+          // console.log(this.currentComponent)
           return this.currentComponent
         }
       },
@@ -160,11 +159,9 @@ export default {
         //   action:"logout",
         //   component:'vue_modal'
         ],
-      props_data:{}
+      appinfo:{data:""}
     }),
-    props: {
-      source: String
-    }
+    
 }
 </script>
 
