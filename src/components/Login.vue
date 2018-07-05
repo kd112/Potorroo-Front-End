@@ -35,6 +35,12 @@ export default {
       password: null
     }
   },
+  beforeMount() {
+      let cookie = this.$cookies.get('potorroo-ui')
+      if (cookie){
+          this.$router.push('/app')
+      }
+  },
   methods: {
     async submit () {
       let result = await this.$services.authenticationService.authenticate({
