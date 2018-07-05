@@ -1,46 +1,32 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout row wrap>
-      <v-flex xs12>
-        <v-card dark >
-          <h1>User Profile</h1>
-        </v-card>
-      </v-flex>
-      <v-flex v-for="(key,index) in userItems" :key="key">
-        {{index}}:{{user[key]}}
-      </v-flex>
-    </v-layout>
-  </v-container>  
+    <div class="profile">
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <v-card dark >
+            <h1>User Profile</h1>
+          </v-card>
+        </v-flex>
+        <v-flex v-for="(key,index) in userItems" :key="key" xs6 light>
+          <!-- {{index}}:{{user[key]}} -->
+          <v-text-field
+          outline
+          v-bind:label="index"
+          v-bind:value="user[key]"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+      <Info></Info>
+    </v-container>  
+  </div>
 </template>
 <script>
+import Info from '@/components/Misc-Components/Info.vue'
 export default {
   name:"Profile",
   props:['data'],
-  methods:{
-    flatten(data){
-      var result = {};
-    function recurse (cur, prop) {
-        if (Object(cur) !== cur) {
-            result[prop] = cur;
-        } else if (Array.isArray(cur)) {
-             for(var i=0, l=cur.length; i<l; i++)
-                 recurse(cur[i], prop + "[" + i + "]");
-            if (l == 0)
-                result[prop] = [];
-        } else {
-            var isEmpty = true;
-            for (var p in cur) {
-                isEmpty = false;
-                recurse(cur[p], prop ? prop+"."+p : p);
-            }
-            if (isEmpty && prop)
-                result[prop] = {};
-        }
-    }
-    recurse(data, "");
-    return result;
-    }
-  },
+  components:{Info},
+  methods:{},
   data:()=>({
     user :{},
     userItems:{
@@ -51,13 +37,19 @@ export default {
     }
   }),
   beforeMount() {
-    this.user = this.flatten(this.data)
+    let data =this.data
+    this.user = this.$helpers.FlattenJson(data)
   },
   mounted() {
-    console.log(this.user)
+    // console.log(this.user)
   },
 }
 </script>
 <style>
-
+.profile{
+  position:relative;
+  top:-20%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width:100%
+}
 </style>
