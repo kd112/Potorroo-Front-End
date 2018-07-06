@@ -53,6 +53,7 @@ export default {
         })
     //   console.log(result.data)
       this.$cookies.set('potorroo-ui',result.data)
+      this.$services.authenticationService.api.setToken(result.data)
       if (result.status===200)this.$router.push('/app')
       else alert("Invalid username password")    
     }

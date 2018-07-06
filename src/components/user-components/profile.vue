@@ -6,17 +6,12 @@
           <v-card dark >
             <h1>User Profile</h1>
           </v-card>
+          <v-spacer></v-spacer>
         </v-flex>
-        <v-flex v-for="(key,index) in userItems" :key="key" xs6 light>
-          <!-- {{index}}:{{user[key]}} -->
-          <v-text-field
-          outline
-          v-bind:label="index"
-          v-bind:value="user[key]"
-          ></v-text-field>
+        <v-flex grid-list-md dark>
+          <info title="User List" v-bind:mapper='mapper' v-bind:data='user' :options="{readonly:false}"></info>
         </v-flex>
       </v-layout>
-      <Info></Info>
     </v-container>  
   </div>
 </template>
@@ -29,7 +24,7 @@ export default {
   methods:{},
   data:()=>({
     user :{},
-    userItems:{
+    mapper:{
       "First Name":"name.first",
       "Last Name":"name.last",
       "User Name":"login.username",

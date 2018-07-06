@@ -11,12 +11,12 @@
       app
     >
     <v-list dense>
-        <v-list-tile  v-for="(item,index) in items" :key="item.text" @click='tileClicked(index)'>
+        <v-list-tile  v-for="(item,index) in items" :key="item.text" @click='tileClicked(index)' v-bind:class="item.onSelected">
           <v-list-tile-action>
-            <v-icon>{{item.icon}}</v-icon>
+            <v-icon v-bind:color="item.color">{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title class='white--text'>
+            <v-list-tile-title v-bind:class='item.textcolor'>
               {{item.text}}
             </v-list-tile-title>
           </v-list-tile-content>
@@ -70,18 +70,21 @@
 import profile from '@/components/user-components/profile.vue'
 import map_component from '@/components/map-components/map.vue'
 import vue_modal from '@/components/Misc-Components/modal.vue'
+import UserList from '@/components/user-components/UserList.vue'
 // console.log(map)
 export default {
   name: 'MainApp',
   components:{
     profile,
     map_component,
-    vue_modal
+    vue_modal,
+    UserList
   },
   beforeMount(){
     if(this.$cookies.get('potorroo-ui')){
       let cookie =this.$cookies.get('potorroo-ui') 
       // console.log("cookie",cookie)
+      if (!this.$services.authenticationService.api.token)this.$services.authenticationService.api.token=cookie
         try{
           let user = this.$jwt.decode(cookie)
           this.items[0].data = user
@@ -89,6 +92,9 @@ export default {
             this.items.push({
               text:"Manage Maps",
               icon:"fa-globe",
+              color:"white",
+              textcolor:"white--text",
+              onSelected:"",
               action:"",
               component:"",
               data:{}
@@ -96,8 +102,11 @@ export default {
             this.items.push({
               text:"Manage Users",
               icon:"fa-users",
+              color:"white",
+              textcolor:"white--text",
+              onSelected:"",
               action:"",
-              component:"",
+              component:"UserList",
               data:{}
             })
           }
@@ -119,8 +128,9 @@ export default {
     },
     tileClicked(index){
       let tab = this.items[index]
-      this.appinfo = tab.props_data
-      console.log(this.appinfo)
+      if (!this.currentSelection || this.currentSelection!==tab){
+        this.currentSelection=tab
+      }
       this.currentComponent = tab.component
       this.componentData.data = tab.data
       if (tab.action==='login')this.props_data={title:"Logout",message:"Do you wish to logout?"}
@@ -144,6 +154,9 @@ export default {
         {
           text:"My Profile",
           icon:'fa-user',
+          color:"white",
+          textcolor:"white--text",
+          onSelected:"",
           action:"user",
           component:"profile",
           data:this.user
@@ -151,6 +164,9 @@ export default {
         {
           text:"My Maps",
           icon:"fa-map",
+          color:"white",
+          textcolor:"white--text",
+          onSelected:"",
           action:"map",
           component:"map_component",
           data:this.user
@@ -161,8 +177,27 @@ export default {
         //   action:"logout",
         //   component:'vue_modal'
         ],
-      appinfo:{data:""}
+        currentSelection:null
     }),
+    watch:{
+      currentSelection:(newSelection,oldSelection)=>{
+        
+        let textcolor = "deep-orange--text darken-1"
+        let color = "grey darken-2"
+        let iconcolor = "deep-orange darken-1"
+        
+        if (oldSelection){
+          oldSelection.textcolor="white--text"
+          oldSelection.color="white"
+          oldSelection.onSelected=""
+        }
+        newSelection.textcolor=textcolor
+        newSelection.color=iconcolor
+        newSelection.onSelected=color
+        
+
+      }
+    }
     
 }
 </script>
