@@ -12,11 +12,13 @@ import 'vuelayers/lib/style.css'
 import cookies from 'vue-cookies';
 import Potoroo from './plugin/index';
 import VueJWT from 'vuejs-jwt'
+import modal from '@/components/misc/modal.vue'
 
 Vue.use(VueLayers)
 Vue.use(cookies)
 Vue.use(Potoroo)
 Vue.use(VueJWT)
+Vue.component('modal',modal)
 Vue.config.productionTip = false
 
 Vue.use(Vuetify, {
