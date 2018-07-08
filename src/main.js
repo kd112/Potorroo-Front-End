@@ -12,14 +12,15 @@ import 'vuelayers/lib/style.css'
 import cookies from 'vue-cookies';
 import Potoroo from './plugin/index';
 import VueJWT from 'vuejs-jwt'
-import modal from '@/components/misc/modal.vue'
+import {default as Vuedals, Component as Vuedal, Bus as VuedalsBus} from 'vuedals';
 
 Vue.use(VueLayers)
 Vue.use(cookies)
 Vue.use(Potoroo)
 Vue.use(VueJWT)
-Vue.component('modal',modal)
+Vue.use(Vuedals)
 Vue.config.productionTip = false
+
 
 Vue.use(Vuetify, {
   iconfont: 'mdi' || 'fa' 

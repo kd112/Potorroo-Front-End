@@ -5,6 +5,7 @@ class AuthenticationService {
     return this
   }
   async authenticate (credentials) {
+    console.log("authenticate")
     return this.api.create().post('authenticate',credentials)
   }
 }

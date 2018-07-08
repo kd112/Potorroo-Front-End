@@ -19,6 +19,7 @@
     "vue": "^2.5.2",
     "vue-cookies": "^1.5.6",
     "vue-router": "^3.0.1",
+    "vuedals": "^1.7.0",
     "vuejs-jwt": "^1.1.0",
     "vuelayers": "^0.10.12",
     "vuetify": "^1.1.0"
