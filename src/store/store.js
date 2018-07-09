@@ -5,11 +5,18 @@ export default new Vuex.Store({
   strict: true,
   state: {
     token: null,
-    user: null
+    user: null,
+    isLoggedIn:false,
+    isAdmin:false,
   },
   mutations: {
     setToken (state, token) {
       state.token = token
+      if(token){
+        state.isLoggedIn=true
+      }else{
+        state.isLoggedIn=false
+      }
     }
   },
   actions: {
