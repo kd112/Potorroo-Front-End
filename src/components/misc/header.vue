@@ -152,27 +152,30 @@ export default {
     async logout(){
         await this.$store.dispatch('setToken',null)
         await this.$store.dispatch('setUser',null)
+        this.$cookies.remove('potorroo-ui')
     },
     async submit() {
       this.sheet = false;
       this.dialog = true;
       try{
-          let res = await this.$services.authenticationService.authenticate({
+          let res = await this.$services.applicationServices.authenticate({
             username: this.username,
             password: this.password
           });
-        console.log(res.data)
         await this.$store.dispatch('setToken',res.data.token)
         await this.$store.dispatch('setUser',res.data.user)
+        this.$cookies.set('potorroo-ui',this.$store.state.token,{expires:60*60*24})
         this.dialog=false
 
       }catch(error){
+          console.log(error)
           this.dialog=false
           this.username=null
           this.password=null
           this.error_message="Authentication Failed!! User Name or Password donot match"
           this.err=true
           setTimeout(()=>{
+              this.$cookies.remove('potorroo-ui')
               this.error_message=""
               this.err=false
               this.sheet=true

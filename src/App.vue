@@ -12,16 +12,23 @@
 
 <script>
 import uiheader from '@/components/misc/header.vue'
-import inside_modal from '@/components/misc/modals/modals.vue'
 export default {
   name: 'App',
-  components:{uiheader,inside_modal},
-  methods:{
-    login(){
-      console.log("login")
-      // this.$emit('vuedals:new',{components:inside_modal})
+  components:{uiheader},
+  async beforeMount() {
+    let cookie = await this.$cookies.get('potorroo-ui',{expires:60*60*24})
+    if (cookie){
+      try{
+        // console.log(cookie)
+        let res = await this.$services.applicationServices.getSession(cookie)
+        this.$store.dispatch('setToken',res.data.token)
+        this.$store.dispatch('setUser',res.data.user)
+      }catch(error){
+        console.log(error)
+      }
+      
     }
-  }
+  },
 }
 </script>
 

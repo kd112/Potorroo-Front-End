@@ -14,7 +14,7 @@
                     <div class="ma-5">
                     </div>
                     <v-flex v-for="item in icons" :key="item.id">
-                            <v-list-tile @click=""> 
+                            <v-list-tile @click="item.onClick"> 
                                 <v-list-tile-action>
                                             <v-icon v-bind:color="item.icon_color">
                                                 {{item.icon}}
@@ -60,7 +60,8 @@ export default {
                     icon:'fa-users',
                     icon_color:'black',
                     title:'Add New User',
-                    text_color:'black--text'
+                    text_color:'black--text',
+                    onClick:""
                     
                 },
                 {
@@ -68,7 +69,8 @@ export default {
                     icon:'fa-map',
                     icon_color:'black',
                     title:'Build New Map',
-                    text_color:'black--text'
+                    text_color:'black--text',
+                    onClick:""
                 }
             ]
         }

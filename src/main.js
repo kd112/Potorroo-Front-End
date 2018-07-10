@@ -20,7 +20,7 @@ Vue.use(cookies)
 Vue.use(Potoroo)
 Vue.use(VueJWT)
 Vue.config.productionTip = false
-sync(store,router)
+sync(store, router)
 
 Vue.use(Vuetify, {
   iconfont: 'mdi' || 'fa'
