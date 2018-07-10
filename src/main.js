@@ -20,6 +20,7 @@ Vue.use(cookies)
 Vue.use(Potoroo)
 Vue.use(VueJWT)
 Vue.config.productionTip = false
+sync(store,router)
 
 Vue.use(Vuetify, {
   iconfont: 'mdi' || 'fa'
@@ -28,6 +29,7 @@ Vue.use(Vuetify, {
 new Vue({
   el: '#app',
   router: router,
+  store,
   components: { App },
   template: '<App/>'
 })
