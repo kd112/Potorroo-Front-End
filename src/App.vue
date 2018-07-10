@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <v-app>
+      
         <uiheader/>
         <main>
           <router-view/>
@@ -11,7 +12,7 @@
 
 <script>
 import uiheader from '@/components/misc/header.vue'
-import inside_modal from '@/components/misc/modals/modals.vue' 
+import inside_modal from '@/components/misc/modals/modals.vue'
 export default {
   name: 'App',
   components:{uiheader,inside_modal},

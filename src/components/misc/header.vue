@@ -1,9 +1,11 @@
 <template>
     <div fluid class="pa-0" xs>
-        <!-- The Top Nav bar -->
         <v-flex>
-
-            <v-toolbar class="grey darken-4" dense>
+            <!-- Admin Nav Drawer -->
+            <admindrawer/>
+        <!-- Admin Nav Drawer Ends -->
+        <!-- The Top Nav bar -->
+            <v-toolbar class="grey darken-4" dense fixed clipped-left>
                 <v-toolbar-title>
                     <v-icon color="white">layers</v-icon>
                     <v-btn flat class="white--text">
@@ -23,7 +25,7 @@
                     <v-btn v-if="!$store.state.isLoggedIn" flat class="white--text" @click="login">
                         <h5>Login</h5>
                         </v-btn>
-                    <v-btn v-if="$store.state.isLoggedIn" flat class="white--text">
+                    <v-btn v-if="$store.state.isLoggedIn" flat class="white--text" @click="logout">
                         <h5>Logout</h5>
                         </v-btn>
             </v-toolbar>
@@ -128,8 +130,12 @@
     </div>
 </template>
 <script>
+import admindrawer from '@/components/misc/admin-nav-drawer.vue'
 export default {
   name: "ui-header",
+  components:{
+      admindrawer
+  },
   data: () => ({
     sheet: false,
     username: null,
@@ -143,6 +149,10 @@ export default {
     login() {
       this.sheet = !this.sheet;
     },
+    async logout(){
+        await this.$store.dispatch('setToken',null)
+        await this.$store.dispatch('setUser',null)
+    },
     async submit() {
       this.sheet = false;
       this.dialog = true;
@@ -151,8 +161,9 @@ export default {
             username: this.username,
             password: this.password
           });
-          console.log(res.data)
-        await this.$store.dispatch('setToken',res.data)
+        console.log(res.data)
+        await this.$store.dispatch('setToken',res.data.token)
+        await this.$store.dispatch('setUser',res.data.user)
         this.dialog=false
 
       }catch(error){
@@ -164,6 +175,7 @@ export default {
           setTimeout(()=>{
               this.error_message=""
               this.err=false
+              this.sheet=true
           },2000)
       }
     }
