@@ -13,12 +13,14 @@
                     <!-- This div class is an empty buffer class that track -->
                     <div class="ma-5">
                     </div>
-                    <v-flex v-for="item in icons" :key="item.id">
-                            <v-list-tile @click="item.onClick"> 
+                    <v-flex v-for="(item,index) in icons" :key="item.id">
+                            <v-list-tile @click="router(index)"> 
                                 <v-list-tile-action>
+                                    <!-- <router-link v-bind:to="item.router"> -->
                                             <v-icon v-bind:color="item.icon_color">
                                                 {{item.icon}}
-                                            </v-icon>                                            
+                                            </v-icon>
+                                    <!-- </router-link>                                             -->
                                 </v-list-tile-action>
                                 <v-list-tile-content>
                                     <v-list-tile-sub-title v-bind:class="item.text_color">
@@ -52,6 +54,12 @@
 
 <script>
 export default {
+    methods:{
+        router(index){
+            let item = this.icons[index]
+            this.$router.push(item.router)
+        }
+    },
     data(){
         return {
             icons:[
@@ -61,7 +69,8 @@ export default {
                     icon_color:'black',
                     title:'Add New User',
                     text_color:'black--text',
-                    onClick:""
+                    onClick:"route",
+                    router:"/users"
                     
                 },
                 {

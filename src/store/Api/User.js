@@ -4,8 +4,9 @@ class UserService {
     this.url = 'api/users'
     return this
   }
-  getUsersByQuery (filter, options) {
-    return this.api.create().get(this.url)
+  getUsersByQuery (token,filter, options) {
+    let headers = { Authorization: `Bearer ${token}` }
+    return this.api.create(headers).get(this.url)
   }
 }
 

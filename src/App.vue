@@ -20,9 +20,9 @@ export default {
     if (cookie){
       try{
         // console.log(cookie)
-        let res = await this.$services.applicationServices.getSession(cookie)
-        this.$store.dispatch('setToken',res.data.token)
-        this.$store.dispatch('setUser',res.data.user)
+        this.$store.dispatch('setUser',cookie)
+        // let res = await this.$services.applicationServices.getSession(cookie)
+        // this.$store.dispatch('setToken',res.data.token)
       }catch(error){
         console.log(error)
       }

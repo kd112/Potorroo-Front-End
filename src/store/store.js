@@ -1,8 +1,9 @@
 import services from './Api/index'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Users from '@/store/modules/User'
+import Maps from '@/store/modules/Map'
 Vue.use(Vuex)
-console.log(services)
 export default new Vuex.Store({
   strict: true,
   state: {
@@ -10,6 +11,10 @@ export default new Vuex.Store({
     user: null,
     isLoggedIn: false,
     isAdmin: false
+  },
+  modules:{
+    Users:Users,
+    Maps:Maps
   },
   mutations: {
     setToken (state, token) {
@@ -30,11 +35,26 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setToken ({ commit }, token) {
-      commit('setToken', token)
+    async login ({ commit }, credentials) {
+     let { data } = await services.ApplicationService.authenticate(credentials)
+
+      commit('setToken', data.token)
+      commit('setUser', data.user)
     },
-    setUser ({ commit }, user) {
-      commit('setUser', user)
+    async logout ({ commit }) {
+      commit('setToken', null)
+        commit('setUser', null)
+     },
+    async setUser ({ commit }, cookie) {
+      try{
+        let { data } = await services.ApplicationService.getSession(cookie)
+  
+        commit('setToken', data.token)
+        commit('setUser', data.user)
+        
+      }catch(error){
+        
+      }
     }
   }
 })

@@ -7,7 +7,7 @@ class Api {
   }
 
   create (customHeader) {
-    let headers = Object.assign({ Authorization: `Bearer ${this.token}` }, customHeader)
+    let headers = Object.assign({},customHeader)
     return axios.create({
       baseURL: 'http://localhost:5000',
       headers: headers

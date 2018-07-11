@@ -147,23 +147,27 @@ export default {
   }),
   methods: {
     login() {
+        // console.log(this.$store.getters.getMapId)
       this.sheet = !this.sheet;
     },
     async logout(){
-        await this.$store.dispatch('setToken',null)
-        await this.$store.dispatch('setUser',null)
+        await this.$store.dispatch('logout')
+        // await this.$store.dispatch('setUser',null)
         this.$cookies.remove('potorroo-ui')
     },
     async submit() {
       this.sheet = false;
       this.dialog = true;
       try{
-          let res = await this.$services.applicationServices.authenticate({
-            username: this.username,
-            password: this.password
-          });
-        await this.$store.dispatch('setToken',res.data.token)
-        await this.$store.dispatch('setUser',res.data.user)
+        //   let res = await this.$services.applicationServices.authenticate({
+        //     username: this.username,
+        //     password: this.password
+        //   });
+        await this.$store.dispatch('login',{
+            username:this.username,
+            password:this.password
+        })
+        // await this.$store.dispatch('setUser',res.data.user)
         this.$cookies.set('potorroo-ui',this.$store.state.token,{expires:60*60*24})
         this.dialog=false
 
