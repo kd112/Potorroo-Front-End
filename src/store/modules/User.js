@@ -5,7 +5,8 @@ const UsersModule = {
     },
     mutations: {
         setUsers(state,users,rootState){
-            this.state.users = users
+            console.log(users)
+            state.users = users
         }
     },
     getters: {
@@ -18,7 +19,8 @@ const UsersModule = {
         async setUsers({state,commit,rootState},filter,options) {
 
             let res = await services.UserService.getUsersByQuery(rootState.token,filter,options)
-            commit('setUsers',res.data)
+            console.log(res.data)
+            commit('setUsers',res.data.user)
         }
     }   
   }
