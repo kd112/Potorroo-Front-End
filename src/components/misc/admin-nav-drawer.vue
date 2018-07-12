@@ -14,7 +14,7 @@
                     <div class="ma-5">
                     </div>
                     <v-flex v-for="(item,index) in icons" :key="item.id">
-                            <v-list-tile @click="router(index)"> 
+                            <v-list-tile @click="router(index)" :class="item.color"> 
                                 <v-list-tile-action>
                                     <!-- <router-link v-bind:to="item.router"> -->
                                             <v-icon v-bind:color="item.icon_color">
@@ -57,6 +57,7 @@ export default {
     methods:{
         router(index){
             let item = this.icons[index]
+            this.currentSelection = item
             this.$router.push(item.router)
         }
     },
@@ -67,6 +68,7 @@ export default {
                     id:1,
                     icon:'fa-users',
                     icon_color:'black',
+                    color:"",
                     title:'Add New User',
                     text_color:'black--text',
                     onClick:"route",
@@ -77,11 +79,27 @@ export default {
                     id:2,
                     icon:'fa-map',
                     icon_color:'black',
+                    color:"",
                     title:'Build New Map',
                     text_color:'black--text',
                     onClick:""
                 }
-            ]
+            ],
+            currentSelection:null
+        }
+    },
+    watch:{
+        currentSelection:(current,previous)=>{
+
+            // let currentitem = this.icons[current]
+            current.color="grey darken-1"
+            current.icon_color="deep-orange darken-3"
+            if(previous){
+                // let previousItem = this.icons[previous]
+                previous.color=""
+                previous.icon_color="black"
+
+            }
         }
     }
 }
