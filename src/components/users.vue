@@ -99,55 +99,88 @@
                         <h3 class="h3-title black--text">Invite A New User</h3>
                     </v-layout>
                     <v-divider></v-divider>
-                    <v-flex class="white black--text" column xs12>
+                    <v-layout v-for="(invite,n) in emails" :key="n" class="white black--text" row xs12>
                         <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
                             provide a username
                         </span> -->
-                        <v-text-field
-                        label="Email"
-                        type="text"
-                        v-model="username"
-                        prepend-inner-icon="fa-user"
-                        ></v-text-field>
-                    </v-flex>
-                    <v-flex class="white black--text" column xs12>
-                        <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
-                            provide a username
-                        </span> -->
-                        <v-text-field
-                        label="Email"
-                        type="text"
-                        v-model="username"
-                        prepend-inner-icon="fa-user"
-                        ></v-text-field>
-                    </v-flex>
-                    <v-flex class="white black--text" column xs12>
-                        <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
-                            provide a username
-                        </span> -->
-                        <v-text-field
-                        label="Email"
-                        type="text"
-                        v-model="username"
-                        prepend-inner-icon="fa-user"
-                        ></v-text-field>
-                    </v-flex>
-                    <v-flex class="white black--text" column xs12>
-                        <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
-                            provide a username
-                        </span> -->
-                        <v-text-field
-                        label="Email"
-                        type="text"
-                        v-model="username"
-                        prepend-inner-icon="fa-user"
-                        ></v-text-field>
+                        <!-- <v-flex xs12 row> -->
+                            <v-text-field
+                            label="Email"
+                            type="text"
+                            v-model="invite.invitations"
+                            ></v-text-field>
+                            <v-spacer></v-spacer>
+                            <v-text-field
+                            label="First Name"
+                            type="text"
+                            v-model="invite.name"
+                            prepend-inner-icon="fa-user"
+                            ></v-text-field>
+                        <!-- </v-flex> -->
+                    </v-layout>
+                    <v-flex>
+                        <v-btn flat left small class="grey--text" @click="emails.push({invitations:null,name:null})">
+                            <v-icon color="grey">add</v-icon>
+                            Add 
+                        </v-btn>
                     </v-flex>
                     <v-flex>
-                        <v-btn color="cyan white--text">
+                        <v-btn color="cyan white--text" @click="submit">
                             <h5>Invite</h5>
                         </v-btn>
                     </v-flex>
+
+                   <div class="text-xs-center">
+                        <v-dialog
+                            v-model="dialog"
+                            width="500"
+                        >
+                            <v-card>
+                                <!-- <v-card-title class="red lighten-2"> -->
+                                    <v-card-text v-bind:class="headercolor">
+                                        <h3 v-bind:class="text_color">{{title}}</h3>
+                                    </v-card-text>
+                                <!-- </v-card-title> -->
+                                <v-divider></v-divider>
+                                <v-card-text>
+                                    {{message}}
+                                </v-card-text>
+                            </v-card>
+                        </v-dialog>
+                </div>
+                    <!-- <v-flex class="white black--text" column xs12> -->
+                        <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
+                            provide a username
+                        </span> -->
+                        <!-- <v-text-field -->
+                        <!-- label="Email" -->
+                        <!-- type="text" -->
+                        
+                        <!-- prepend-inner-icon="fa-user" -->
+                        <!-- ></v-text-field> -->
+                    <!-- </v-flex> -->
+                    <!-- <v-flex class="white black--text" column xs12> -->
+                        <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
+                            provide a username
+                        </span> -->
+                        <!-- <v-text-field -->
+                        <!-- label="Email" -->
+                        <!-- type="text" -->
+                        
+                        <!-- prepend-inner-icon="fa-user" -->
+                        <!-- ></v-text-field> -->
+                    <!-- </v-flex> -->
+                    <!-- <v-flex class="white black--text" column xs12> -->
+                        <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
+                            provide a username
+                        </span> -->
+                        <!-- <v-text-field -->
+                        <!-- label="Email" -->
+                        <!-- type="text" -->
+                        
+                        <!-- prepend-inner-icon="fa-user" -->
+                        <!-- ></v-text-field> -->
+                    <!-- </v-flex> -->
                     <!-- <v-flex class="white black--text" xs12> -->
                         <!-- <span v-bind:style="{ display: isPassword }"  class=' white red--text'>Please 
                             provide a password
@@ -180,13 +213,36 @@ export default {
         },
         adminClick(index){
             // console.log(index)
+        },
+        submit(){
+            let success = this.$store.dispatch('invite',this.emails)
+            if (success){
+
+                this.headercolor = "red lighten-2"
+                this.text_color = "white--text"
+                this.title = "Error!!"
+                this.message = "Invitations Sent"
+            }else{
+                this.headercolor = "red lighten-2"
+                this.text_color = "white--text"
+                this.title = "Error!!"
+                this.message = "Oops!! Something went wrong"
+            }
+            this.dialog = true
         }
+
     },
     data(){
         return {
             isloading:false,
             checkbox:false,
             newUser:false,
+            headercolor:"",
+            text_color:"",
+            title:"",
+            message:"",
+            dialog:false,
+            emails:[{invitations:null,name:null}]
         }
     },
     mount(){
