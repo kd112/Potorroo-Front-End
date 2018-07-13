@@ -26,7 +26,7 @@ export default {
         // this.$store.dispatch('setToken',res.data.token)
       }catch(error){
         this.$router.push('/')
-        console.log(error)
+        console.log("error",error)
       }
       
     }

@@ -12,17 +12,22 @@ export default new Vuex.Store({
     isLoggedIn: false,
     isAdmin: false
   },
-  modules:{
-    Users:Users,
-    Maps:Maps
+  modules: {
+    Users: Users,
+    Maps: Maps
+  },
+  getters: {
+    session(state, getters) {
+      return state.token;
+    }
   },
   mutations: {
-    setToken (state, token) {
-      state.token = token
+    setToken(state, token) {
+      state.token = token;
       if (token) {
-        state.isLoggedIn = true
+        state.isLoggedIn = true;
       } else {
-        state.isLoggedIn = false
+        state.isLoggedIn = false;
       }
     },
     setUser (state, user) {
@@ -36,25 +41,23 @@ export default new Vuex.Store({
   },
   actions: {
     async login ({ commit }, credentials) {
-     let { data } = await services.ApplicationService.authenticate(credentials)
-
-      commit('setToken', data.token)
-      commit('setUser', data.user)
+      let { data } = await services.ApplicationService.authenticate(
+        credentials
+      )
+      commit('setToken', data.token);
+      commit('setUser', data.user);
     },
     async logout ({ commit }) {
       commit('setToken', null)
-        commit('setUser', null)
-     },
+      commit('setUser', null)
+    },
     async setUser ({ commit }, cookie) {
-      try{
+      try {
         let { data } = await services.ApplicationService.getSession(cookie)
-  
+        // console.log(data)
         commit('setToken', data.token)
         commit('setUser', data.user)
-        
-      }catch(error){
-        
-      }
+      } catch (error) {}
     }
   }
 })
