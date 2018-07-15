@@ -29,16 +29,13 @@ const UsersModule = {
       commit('toggleAdmin', index)
     },
     async invite({ state,commit, rootState },invites) {
-      try{
-        await invites.forEach(async invite => {
-          await services.ApplicationService.invite(rootState.token, invite)
-        });
-        console.log("beofre")
-        return true
-      }catch(error){
-        console.log("catch")
-        return false
-      }
+      // try{
+        // await invites.forEach(async invite => {
+          return services.UserService.invite(rootState.token, {invitations:invites})
+        // });
+      // }catch(error){
+      //   throw error
+      // }
     }
   }
 }

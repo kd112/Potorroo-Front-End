@@ -107,7 +107,7 @@
                             <v-text-field
                             label="Email"
                             type="text"
-                            v-model="invite.invitations"
+                            v-model="invite.email"
                             ></v-text-field>
                             <v-spacer></v-spacer>
                             <v-text-field
@@ -215,20 +215,40 @@ export default {
             // console.log(index)
         },
         submit(){
-            let success = this.$store.dispatch('invite',this.emails)
-            if (success){
+        // let success = 
 
-                this.headercolor = "red lighten-2"
+            this.$store.dispatch('invite',this.emails).
+            then((res)=>{
+                if (res.status!==200) {
+                    // let error = new Error("Oops!! Something went wrong")
+                    throw new Error()
+                }
+                this.headercolor = "white"
                 this.text_color = "white--text"
-                this.title = "Error!!"
+                this.title = ""
                 this.message = "Invitations Sent"
-            }else{
+                this.dialog = true
+            })
+            .catch((error)=>{
                 this.headercolor = "red lighten-2"
                 this.text_color = "white--text"
                 this.title = "Error!!"
                 this.message = "Oops!! Something went wrong"
-            }
-            this.dialog = true
+                this.dialog = true
+
+            })
+            // if (success){
+
+            //     this.headercolor = "red lighten-2"
+            //     this.text_color = "white--text"
+            //     this.title = "Error!!"
+            //     this.message = "Invitations Sent"
+            // }else{
+            //     this.headercolor = "red lighten-2"
+            //     this.text_color = "white--text"
+            //     this.title = "Error!!"
+            //     this.message = "Oops!! Something went wrong"
+            // }
         }
 
     },
@@ -242,7 +262,7 @@ export default {
             title:"",
             message:"",
             dialog:false,
-            emails:[{invitations:null,name:null}]
+            emails:[{email:null,name:null}]
         }
     },
     mount(){

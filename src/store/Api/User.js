@@ -8,6 +8,10 @@ class UserService {
     let headers = { Authorization: `Bearer ${token}` }
     return this.api.create(headers).get(this.url)
   }
+  async invite(token,invite) {
+    let headers = { Authorization: `Bearer ${token}` }
+    return this.api.create(headers).post(`${this.url}/invite`,invite)
+  }
 }
 
 export default UserService
