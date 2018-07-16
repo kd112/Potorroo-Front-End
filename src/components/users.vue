@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="grey pa-0" column fill-height >
+    <v-container fluid class="grey pa-0" grid-list-xl text-xs-center fill-height >
          <!-- Loading Icon -->         
          <div class="text-xs-center page elevation-0 white" id="div">
                 <v-dialog
@@ -27,7 +27,90 @@
             <!-- Loading Icon Ends -->
         
             <!-- User List Begins -->
-            <v-layout justify-center column >
+            <v-layout row wrap>
+                <v-flex
+                xs-10 
+                offset-xs1
+                mr-5
+                my-2
+                v-if="($store.getters.users.length!==0)"
+                v-for="(user,idx) in $store.getters.users"
+                :key="user._id"
+                
+                >
+                <v-expansion-panel
+                focusable    
+                >
+                    <v-expansion-panel-content class="grey darken-4 py-3">
+                        <div slot="header" class = "white--text">
+                                <v-badge v-if="user.isAdmin" left>
+                                    <v-icon medium color="green" left>
+                                        supervisor_account
+                                    </v-icon>
+                                    <span>Admin</span>
+                                </v-badge>
+                            <h3 class="pb-3">
+                                {{fullName(idx)}}
+                            </h3>  
+                        </div>
+                        <v-card>
+                            <v-card-text class="grey lighten-2 py-1">
+                                <v-layout class="pa-3" row xs>
+                                    <v-flex row>
+                                        <v-text-field
+                                            readonly
+                                            label="First Name"
+                                            :value="user.name.first"
+                                            light
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
+                                    <!-- <v-spacer></v-spacer> -->
+                                    <v-flex row>
+                                        <v-text-field
+                                        readonly
+                                        label="Last Name"
+                                        :value="user.name.last"
+                                        light
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                                <v-layout class = "pa-3" row xs12>
+                                    <v-flex row>
+                                        <v-text-field
+                                        readonly
+                                        label="Company"
+                                        light
+                                        ></v-text-field>
+                                    </v-flex>
+                                    <v-flex row>
+                                        <v-text-field
+                                        readonly
+                                        label="Phone"
+                                        light
+                                        ></v-text-field>
+                                    </v-flex>
+                                    <v-flex row>
+                                        <v-text-field
+                                        readonly
+                                        label="Email"
+                                        light
+                                        ></v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                                <v-btn flat small class="black " @click="$store.dispatch('toggleAdmin',idx)">
+                                    <v-icon medium left v-if="user.isAdmin===false" color="grey">check_box_outline_blank</v-icon>
+                                    <v-icon medium left v-else-if="user.isAdmin===true" color="green">check_box</v-icon>
+                                    Admin
+                                </v-btn>
+                            </v-card-text>
+                        </v-card>
+                    </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-flex>
+            </v-layout>
+            <!-- <v-layout justify-center column >
                 <div class="container-panel my-3">
                     <v-expansion-panel focusable class=" my-3 white" >
                         <v-expansion-panel-content
@@ -73,16 +156,12 @@
                                     <v-icon v-else-if="user.isAdmin===true" color="green">verified_user</v-icon>
                                     Admin
                                 </v-btn>
-                                <!-- <input id="isAdmin" :checked="user.isAdmin" type="checkbox" label="Is Admin" class="white--text">
-                                <label for="isAdmin" class="white--text">
-                                    <h5>Is Admin</h5>
-                                </label> -->
                             </v-card-text>
                         </v-card>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </div>
-            </v-layout>
+            </v-layout> -->
             
         <!-- User List Begins Ends-->
         <v-btn fab dark fixed bottom right color="blue" @click="newUser=!newUser">
@@ -118,12 +197,15 @@
                             ></v-text-field>
                         <!-- </v-flex> -->
                     </v-layout>
-                    <v-flex>
-                        <v-btn flat left small class="grey--text" @click="emails.push({invitations:null,name:null})">
-                            <v-icon color="grey">add</v-icon>
-                            Add 
-                        </v-btn>
-                    </v-flex>
+                    <!-- <v-layout row xs12> -->
+                        <!-- <v-flex row> -->
+                            <v-btn flat left small class="grey--text" @click="emails.push({invitations:null,name:null})">
+                                <v-icon color="grey">add</v-icon>
+                                Add 
+                            </v-btn>
+                            <!-- <v-spacer></v-spacer> -->
+                        <!-- </v-flex> -->
+                    <!-- </v-layout> -->
                     <v-flex>
                         <v-btn color="cyan white--text" @click="submit">
                             <h5>Invite</h5>
