@@ -36,7 +36,15 @@ const UsersModule = {
       // }catch(error){
       //   throw error
       // }
+    },
+    async getUser ({},id){
+      // console.log("getuser")
+      let {data} = await services.ApplicationService.getInvitatation(id)
+      console.log(data)
+      return data
+      
     }
+
   }
 }
 export default UsersModule

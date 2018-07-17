@@ -58,7 +58,7 @@
                             <div class="px-3"></div>
                             <v-flex row>
                                 <v-text-field
-                                
+                                readOnly
                                 label="Email"
                                 light
                                 type="email"
@@ -97,11 +97,11 @@
                             </v-flex>
                         </v-layout>
                         <v-flex row>
-                            <v-btn color="cyan white--text" flat @click="submit">
-                                <h5>Save</h5>
+                            <v-btn color="cyan white--text" flat @click="submit" large>
+                                Save
                             </v-btn>
-                            <v-btn color="red white--text" flat @click="dialog=false">
-                                <h5>Cancel</h5>
+                            <v-btn color="red white--text" flat @click="dialog=false" large>
+                                Cancel
                             </v-btn>
                         </v-flex>
                     </form>
@@ -117,7 +117,19 @@ export default {
     data(){
         return {
             dialog:true,
-            user:null,
+            user:{
+            name:{
+                first:null,
+                last:null
+            },
+            login:{
+                username:null,
+                password:null
+            },
+            email:null,
+            phone:null,
+            company:null
+        },
             repeatpassword:null
         }
     },
@@ -127,8 +139,27 @@ export default {
         }
     },
     async beforeMount(){
-        await this.$store.dispatch('getNewUser',this.id)
-        this.user = this.$store.getters.user
+        let user= await this.$store.dispatch('getUser',this.id)
+        console.log("before",user)
+        this.user = user.user
+        console.log("after",this.user)
+    // this.user = {
+        //     name:{
+        //         first:null,
+        //         last:null
+        //     },
+        //     login:{
+        //         username:null,
+        //         password:null
+        //     },
+        //     email:null,
+        //     phone:null,
+        //     company:null
+        // }
+        // console.log(this.user)
+    },
+    mounted(){
+        console.log(this.user)
     }
 }
 </script>

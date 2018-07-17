@@ -10,6 +10,10 @@ class ApplicationServices {
   getSession (token) {
     return this.api.create({ 'cookies': token }).get('session', token)
   }
+  getInvitatation (id) {
+    
+    return this.api.create().get(`invitation/${id}`)
+  }
  
 }
 
