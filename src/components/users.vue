@@ -192,14 +192,14 @@
                             <v-text-field
                             label="First Name"
                             type="text"
-                            v-model="invite.name"
+                            v-model="invite.name.first"
                             prepend-inner-icon="fa-user"
                             ></v-text-field>
                         <!-- </v-flex> -->
                     </v-layout>
                     <!-- <v-layout row xs12> -->
                         <!-- <v-flex row> -->
-                            <v-btn flat left small class="grey--text" @click="emails.push({invitations:null,name:null})">
+                            <v-btn flat left small class="grey--text" @click="emails.push({invitations:null,name:{first:null}})">
                                 <v-icon color="grey">add</v-icon>
                                 Add 
                             </v-btn>
@@ -344,7 +344,7 @@ export default {
             title:"",
             message:"",
             dialog:false,
-            emails:[{email:null,name:null}]
+            emails:[{email:null,name:{first:null}}]
         }
     },
     mount(){

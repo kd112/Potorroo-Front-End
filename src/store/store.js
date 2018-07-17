@@ -19,6 +19,9 @@ export default new Vuex.Store({
   getters: {
     session(state, getters) {
       return state.token;
+    },
+    user (state, getters) {
+      return state.user
     }
   },
   mutations: {
@@ -58,6 +61,14 @@ export default new Vuex.Store({
         commit('setToken', data.token)
         commit('setUser', data.user)
       } catch (error) {}
+    },
+    async getNewUser ({ commit }, id) {
+      try {
+        let { data } = await services.ApplicationService.getUser(id)
+        // console.log(data)
+        // commit('setToken', data.token)
+        commit('setUser', data.user)
+      } catch (error) { }
     }
   }
 })

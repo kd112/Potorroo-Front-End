@@ -14,21 +14,28 @@
 import uiheader from '@/components/misc/header.vue'
 export default {
   name: 'App',
+  data(){
+    return {
+      allowed_routes:['invite']
+    }
+  },
   components:{uiheader},
   async beforeMount() {
-    let cookie = await this.$cookies.get('potorroo-ui',{expires:60*60*24})
-    if (cookie){
-      try{
-        // console.log(cookie)
-        this.$store.dispatch('setUser',cookie)
-        this.$router.push('/')
-        // let res = await this.$services.applicationServices.getSession(cookie)
-        // this.$store.dispatch('setToken',res.data.token)
-      }catch(error){
-        this.$router.push('/')
-        console.log("error",error)
+    if (!this.allowed_routes.includes(this.$router.currentRoute.name)){
+      let cookie = await this.$cookies.get('potorroo-ui',{expires:60*60*24})
+      if (cookie){
+        try{
+          // console.log(cookie)
+          this.$store.dispatch('setUser',cookie)
+          this.$router.push('/')
+          // let res = await this.$services.applicationServices.getSession(cookie)
+          // this.$store.dispatch('setToken',res.data.token)
+        }catch(error){
+          this.$router.push('/')
+          console.log("error",error)
+        }
+        
       }
-      
     }
   },
 }
