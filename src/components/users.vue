@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="grey pa-0" grid-list-xl text-xs-center fill-height >
+    <v-container fluid class="grey pa-0" grid-list-xl text-xs-center fill-height>
          <!-- Loading Icon -->         
          <div class="text-xs-center page elevation-0 white" id="div">
                 <v-dialog
@@ -27,16 +27,18 @@
             <!-- Loading Icon Ends -->
         
             <!-- User List Begins -->
-            <v-layout row wrap>
-                <v-flex
+            <v-layout column wrap>
+                <!-- <v-flex -->
+                <div 
+                class="
+                container-panel
+                mx-5
                 xs-10 
-                offset-xs1
-                mr-5
-                my-2
+                offset-xs5"
                 v-if="($store.getters.users.length!==0)"
                 v-for="(user,idx) in $store.getters.users"
                 :key="user._id"
-                
+                row 
                 >
                 <v-expansion-panel
                 focusable    
@@ -82,6 +84,7 @@
                                         readonly
                                         label="Company"
                                         light
+                                        :value="user.company"
                                         ></v-text-field>
                                     </v-flex>
                                     <v-flex row>
@@ -89,6 +92,7 @@
                                         readonly
                                         label="Phone"
                                         light
+                                        :value="user.phone"
                                         ></v-text-field>
                                     </v-flex>
                                     <v-flex row>
@@ -96,6 +100,7 @@
                                         readonly
                                         label="Email"
                                         light
+                                        :value="user.email"
                                         ></v-text-field>
                                     </v-flex>
                                 </v-layout>
@@ -108,7 +113,8 @@
                         </v-card>
                     </v-expansion-panel-content>
                     </v-expansion-panel>
-                </v-flex>
+                </div>
+                <!-- </v-flex> -->
             </v-layout>
             <!-- <v-layout justify-center column >
                 <div class="container-panel my-3">
@@ -372,9 +378,10 @@ export default {
 <style scoped>
 .container-panel{
     position:relative;
-    width: 75%;
-    left:15%;
-    top:-23%;
+    width: 90%;
+    left:5%;
+    top:5%;
+    padding-top:20px;
 }
 
 .h3-title {

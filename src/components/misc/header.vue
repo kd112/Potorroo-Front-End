@@ -154,6 +154,7 @@ export default {
         await this.$store.dispatch('logout')
         // await this.$store.dispatch('setUser',null)
         this.$cookies.remove('potorroo-ui')
+        this.$router.push('/')
     },
     async submit() {
       this.sheet = false;

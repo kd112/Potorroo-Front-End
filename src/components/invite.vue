@@ -7,7 +7,7 @@
                     width="50%"
                     persistent
                 >
-                    <form action="" class="white py-5 px-3" autocomplete="off">
+                    <v-form ref="form" action="" class="white py-5 px-3" autocomplete="off" v-model="valid" lazy-validation>
                         <v-layout align-content-center class="white py-0 text-md-center text-sm-center">
                             <h1 class="text-md-center text-sm-center black--text">User Profile</h1>
                         </v-layout>
@@ -20,6 +20,7 @@
                                     type="text"
                                     light
                                     v-model="user.name.first"
+                                    required
                                 >
                                 </v-text-field>
                             </v-flex>
@@ -31,6 +32,7 @@
                                 type="text"
                                 light
                                 v-model="user.name.last"
+                                required
                                 >
                                 </v-text-field>
                             </v-flex>
@@ -62,6 +64,7 @@
                                 label="Email"
                                 light
                                 type="email"
+                                :rules="emailrules"
                                 v-model="user.email"
                                 ></v-text-field>
                             </v-flex>
@@ -73,6 +76,7 @@
                                 light
                                 type="text"
                                 v-model="user.login.username"
+                                required
                                 ></v-text-field>
                             </v-flex>
                         </v-layout>
@@ -83,16 +87,21 @@
                                 light
                                 type="Password"
                                 v-model="user.login.password"
+                                :rules="passwordrules"
+                                required
                                 ></v-text-field>
                             </v-flex>
                         </v-layout>
                         <v-layout class="pa-3" xs12>
+                            
                             <v-flex row>
                                 <v-text-field
                                 label="Repeat Password"
                                 light
                                 type="Password"
                                 v-model="repeatpassword"
+                                :rules="passwordrules"
+                                required
                                 ></v-text-field>
                             </v-flex>
                         </v-layout>
@@ -104,10 +113,47 @@
                                 Cancel
                             </v-btn>
                         </v-flex>
-                    </form>
+                    </v-form>
                 </v-dialog>
         </v-layout>
         <!-- </div> -->
+        <v-layout class="text-xs-center">
+            <v-dialog
+                v-model="error"
+                width="500"
+            >
+                <v-card>
+                    <!-- <v-card-title class="red lighten-2"> -->
+                        <v-card-text class="red lighten-2">
+                            <h3 class="white--text">ERROR!!</h3>
+                        </v-card-text>
+                    <!-- </v-card-title> -->
+                    <v-divider></v-divider>
+                    <v-card-text>
+                        {{error_message}}
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
+        </v-layout>
+        <v-layout class="text-xs-center">
+            <v-dialog
+                v-model="redirect"
+                width="500"
+            >
+                <v-card>
+                    <!-- <v-card-title class="red lighten-2"> -->
+                        <v-card-text class="red lighten-2">
+                            <h3 class="white--text">Redirecting</h3>
+                        </v-card-text>
+                    <!-- </v-card-title> -->
+                    <v-divider></v-divider>
+                    <v-card-text>
+                        <h5>The link has expired,<br></h5>
+                        <h5>redirecting....</h5>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
+        </v-layout>
     </v-container>
 </template>
 
@@ -116,7 +162,11 @@ export default {
     props:['id'],
     data(){
         return {
-            dialog:true,
+            error_message:"",
+            error:false,
+            redirect:false,
+            valid:true,
+            dialog:false,
             user:{
             name:{
                 first:null,
@@ -128,38 +178,64 @@ export default {
             },
             email:null,
             phone:null,
-            company:null
+            company:null,
+            isAuthenticated:null,
         },
-            repeatpassword:null
+            repeatpassword:null,
+            passwordrules:[
+                (v)=>v===this.user.login.password ||'Password Doesnot Match'
+            ],
+            emailrules:[
+                v => !!v || 'E-mail is required',
+                v => /.+@.+/.test(v) || 'E-mail must be valid'
+            ]
+
         }
     },
     methods:{
-        submit(){
+        async submit(){
+            try{
+                if(this.$refs.form.validate()){
+                    this.user.isAuthenticated=true
+                    let { data } = await this.$store.dispatch('newUser',{user:this.user})
+                    this.$store.dispatch('setUser',data.token)
+                    this.$refs.form.clear()
+                    this.$router.push('/')
+                }
+            }catch(error){
+                
+            }
             
         }
     },
     async beforeMount(){
-        let user= await this.$store.dispatch('getUser',this.id)
-        console.log("before",user)
-        this.user = user.user
-        console.log("after",this.user)
-    // this.user = {
-        //     name:{
-        //         first:null,
-        //         last:null
-        //     },
-        //     login:{
-        //         username:null,
-        //         password:null
-        //     },
-        //     email:null,
-        //     phone:null,
-        //     company:null
-        // }
-        // console.log(this.user)
+        try{
+            
+            let user= await this.$store.dispatch('getUser',this.id)
+            if (!user){
+                throw new Error()
+            }else{
+                
+                this.user = user.user
+                this.dialog =true
+            }
+        }catch(error){
+            this.$router.push('/')
+        }
     },
-    mounted(){
-        console.log(this.user)
+    watch:{
+        redirect:(val)=>{
+            if(!val) {
+                console.log("if")
+                return
+            }
+            console.log(this.redirect)
+            setTimeout(() => {
+                console.log(this.redirect)
+                this.redirect = false
+                console.log(this.redirect)
+                }, 4000)
+        }
     }
 }
 </script>
