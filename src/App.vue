@@ -27,7 +27,7 @@ export default {
         try{
           // console.log(cookie)
           this.$store.dispatch('setUser',cookie)
-          this.$router.push('/')
+          this.$router.push('/app')
           // let res = await this.$services.applicationServices.getSession(cookie)
           // this.$store.dispatch('setToken',res.data.token)
         }catch(error){

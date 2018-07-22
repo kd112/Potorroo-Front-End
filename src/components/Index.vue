@@ -1,15 +1,19 @@
 <template>
-    <v-container fluid class="pa-0" fill-height>
-        <!-- <div id="map" class="map">
-
-        </div> -->
-        <vl-map :load-tiles-while-animating="true" :load-tiles-while-interacting="true" style="height: 100%" :data-projection.sync="projection">
-            <vl-view :zoom.sync="zoom" :center.sync="center" :rotation.sync="rotation" ></vl-view>
-            <vl-layer-tile id="osm">
-                <vl-source-osm></vl-source-osm>
-            </vl-layer-tile>
-        </vl-map>
-    </v-container>   
+    <!-- <transition v-fade-transition>  -->
+    <v-container fluid dark class=" black pa-0" fill-height >
+        <!-- <v-layout></v-layout> -->
+        <v-layout column offset-xs12 mt-5>
+            <v-flex></v-flex>
+            <v-flex>
+                <v-icon large color="white">layers</v-icon>
+                <div class="py-2"></div>
+                <h1 class="white--text">POTOROO</h1>
+            </v-flex>
+            <v-flex></v-flex>
+        </v-layout>
+        <!-- <v-layout></v-layout> -->
+    </v-container>
+    <!-- </transition>    -->
 </template>
  <script>
  export default {

@@ -9,13 +9,13 @@ import router from './router'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'font-awesome/css/font-awesome.css'
-import VueLayers from 'vuelayers'
-import 'vuelayers/lib/style.css'
+// import VueLayers from 'vuelayers'
+// import 'vuelayers/lib/style.css'
 import cookies from 'vue-cookies'
 import Potoroo from './plugin/index'
 import VueJWT from 'vuejs-jwt'
 
-Vue.use(VueLayers)
+// Vue.use(VueLayers)
 Vue.use(cookies)
 Vue.use(Potoroo)
 Vue.use(VueJWT)

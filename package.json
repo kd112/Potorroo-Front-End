@@ -16,12 +16,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "font-awesome": "^4.7.0",
-    "ol": "^5.0.2",
+    "ol": "^5.1.2",
     "vue": "^2.5.2",
     "vue-cookies": "^1.5.6",
     "vue-router": "^3.0.1",
     "vuejs-jwt": "^1.1.0",
-    "vuelayers": "^0.10.12",
     "vuetify": "^1.1.0",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"

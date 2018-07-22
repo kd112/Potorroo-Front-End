@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import map from '@/components/map.vue'
 import index from '@/components/Index.vue'
 import UsersList from '@/components/users.vue'
 import Invite from '@/components/invite.vue'
@@ -14,6 +15,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
+    },
+    {
+      path: '/app',
+      name: 'map',
+      component: map
     },
     {
       path: '/users',

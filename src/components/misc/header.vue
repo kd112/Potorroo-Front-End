@@ -42,7 +42,7 @@
                 <div class="white">
                     <span v-bind:style="{ display: badCredentials }" class="white red--text"> Invalid Credentials</span>
                 </div>
-                <form action="" class="white py-5 px-3" autocomplete="off">
+                <v-form  ref='form' action="" class="white py-5 px-3" autocomplete="off" lazy-validation>
                     <v-flex class="white black--text" xs12>
                         <!-- <span v-bind:style="{ display: isUsername }"  class='white red--text'>Please 
                             provide a username
@@ -52,6 +52,8 @@
                         type="text"
                         v-model="username"
                         prepend-inner-icon="fa-user"
+                        required
+                        :rules="usernamerules"
                         ></v-text-field>
                     </v-flex>
                     <v-flex class="white black--text" xs12>
@@ -62,8 +64,10 @@
                         label="Password"
                         type="password"
                         v-model="password"
+                        :rules="passwordRules"
                         autocomplete="new-password"
                         prepend-inner-icon="fa-lock"
+                        required
                         ></v-text-field>
                     </v-flex>
                     <v-flex class="white " xs12>
@@ -72,7 +76,7 @@
                         </v-btn>
                     </v-flex>
 
-                </form>
+                </v-form>
             </v-bottom-sheet>
         </v-layout>
         
@@ -143,7 +147,13 @@ export default {
     err: false,
     error_message:"",
     badCredentials: "none",
-    dialog: false
+    dialog: false,
+    usernamerules:[
+        v=>v && v.length>0 || 'Please provide a user name'
+    ],
+    passwordRules:[
+        v=>v && v.length >0 || 'Please provide a valid password'
+    ]
   }),
   methods: {
     login() {
@@ -157,20 +167,26 @@ export default {
         this.$router.push('/')
     },
     async submit() {
-      this.sheet = false;
-      this.dialog = true;
-      try{
-        //   let res = await this.$services.applicationServices.authenticate({
-        //     username: this.username,
+        try{
+            //   let res = await this.$services.applicationServices.authenticate({
+                //     username: this.username,
         //     password: this.password
         //   });
-        await this.$store.dispatch('login',{
-            username:this.username,
-            password:this.password
-        })
-        // await this.$store.dispatch('setUser',res.data.user)
-        this.$cookies.set('potorroo-ui',this.$store.state.token,{expires:60*60*24})
-        this.dialog=false
+        // console.log(this.$refs.form.validate())
+        if (this.$refs.form.validate()){
+            this.sheet = false;
+            this.dialog = true;
+            await this.$store.dispatch('login',{
+                username:this.username,
+                password:this.password
+            })
+            // await this.$store.dispatch('setUser',res.data.user)
+            this.$cookies.set('potorroo-ui',this.$store.state.token,{expires:60*60*24})
+            this.dialog=false
+            this.$refs.form.reset()
+            this.$router.push('/app')
+
+        }
 
       }catch(error){
           console.log(error)

@@ -40,16 +40,10 @@ const UsersModule = {
     async getUser ({},id){
       // console.log("getuser")
       let {data} = await services.ApplicationService.getInvitatation(id)
-      // console.log(data)
-      return data
+      // console.log(data.user)
+      return data.user
       
-    },
-    newUser({},payload){
-      return services.ApplicationService.newUser(payload)
     }
-    // getUserName({},username){
-    //   return services.ApplicationService.va
-    // }
 
   }
 }
