@@ -15,7 +15,9 @@ class LayerBuilder{
         // console.log(map.addLayer)
         map.addLayer(layer)
         data.layers.forEach(element => {
-            map.addLayer(this._build(element))
+            let new_Layer = this._build(element) 
+            // console.log(new_layer)
+            map.addLayer(new_Layer)
         });
         return map
 
@@ -34,11 +36,40 @@ class LayerBuilder{
 
     _vectorlayer(layer){
      return new VectorLayer({
-        source: new VectorSource({
-          url: layer.source,
-          format: new GeoJSON()
-            })
+        source:this._buildsource(layer.source,new GeoJSON())
         })      
+    }
+    _buildsource(source,format){
+        console.log("this._buildsource")
+        let vectorSource = new VectorSource({
+            format:format,
+            loader:(extent, resolution, projection)=>{
+                var proj = projection.getCode();
+                // var url = 'https://ahocevar.com/geoserver/wfs?service=WFS&' +
+                //     'version=1.1.0&request=GetFeature&typename=osm:water_areas&' +
+                //     'outputFormat=application/json&srsname=' + proj + '&' +
+                //     'bbox=' + extent.join(',') + ',' + proj;
+                var url = encodeURIComponent(source)
+                var xhr = new XMLHttpRequest();
+                console.log(`/proxy?source=${url}`)
+                xhr.open('GET', `/proxy?source=${url}`);
+                var onError = function() {
+                    console.log('onError')
+                vectorSource.removeLoadedExtent(extent);
+                }
+                xhr.onerror = onError;
+                xhr.onload = function() {
+                if (xhr.status == 200) {
+                    vectorSource.addFeatures(
+                        vectorSource.getFormat().readFeatures(xhr.responseText));
+                } else {
+                    onError();
+                }
+                }
+                xhr.send();
+            }
+        })
+        return vectorSource
     }
 }
 
