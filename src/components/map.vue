@@ -3,17 +3,52 @@
         <v-flex id="map" fill-height>
 
         </v-flex>
+        <div class="text-xs-center page elevation-0 white" id="div">
+                <v-dialog
+                v-model="isloading"
+                hide-overlay
+                persistent
+                width="300"
+                >
+                <v-card
+                    color="white"
+                    dark
+                >
+                    <v-card-text class="black--text">
+                    <h5>Building....</h5>
+                    <v-divider></v-divider>
+                    <v-progress-linear
+                        indeterminate
+                        color="blue"
+                        class="mb-0"
+                    ></v-progress-linear>
+                    </v-card-text>
+                </v-card>
+                </v-dialog>
+            </div>
     </v-container>   
 </template>
  <script>
  export default {
      data(){
          return {
-             map:null
+             maps:null,
+             isloading:false,
          }
      },
-     async mounted(){
-         this.map = await this.$store.dispatch('buildMap',123123)
+     mounted(){
+         this.isloading=true
+        //  this.maps = await this.$store.dispatch('buildMap',123123)
+         this.$store.dispatch('buildMap',123123).then((map)=>{
+            //  return new Promise((resolve,reject)=>{
+                 this.maps = map
+                //  resolve()
+            //  })
+         }).then(()=>{
+             setTimeout(()=>{
+                 this.isloading=false
+             },3000)
+         })
         // console.log(this.map.getView())
         //  console.log(this.map.getLayers())
         // this.map = this.$store.getters.getMap

@@ -13,10 +13,14 @@ export default {
     map = _view.init(map,data)
     map = _layer.init(map,data)
     // console.log("map",map)
-    
+    map.on('singleclick',mapClicked)
 
     return map
     },
+}
+
+function mapClicked(){
+    console.log(arguments)
 }
 
 function newlayer (map,layers){
