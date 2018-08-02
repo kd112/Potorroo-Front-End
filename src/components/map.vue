@@ -1,5 +1,6 @@
 <template>
     <v-container fluid class="pa-0" fill-height>
+        <div ref="overlay"></div>
         <v-flex id="map" fill-height>
 
         </v-flex>
@@ -39,7 +40,7 @@
      mounted(){
          this.isloading=true
         //  this.maps = await this.$store.dispatch('buildMap',123123)
-         this.$store.dispatch('buildMap',123123).then((map)=>{
+         this.$store.dispatch('buildMap',123123,this.$refs.overlay).then((map)=>{
             //  return new Promise((resolve,reject)=>{
                  this.maps = map
                 //  resolve()

@@ -25,7 +25,7 @@ const Mapsmodule = {
     
   },
   actions: {
-    buildMap({commit},id){
+    buildMap({commit},id,overlay){
       // Make an async call to the express database to fetch map data
       return new Promise((resolve,reject)=>{
         let data = {
@@ -59,8 +59,14 @@ const Mapsmodule = {
         }
   
         }
+
+
+
+
+
         if(!data)data={};
         data.target = 'map'
+        data.overlay=overlay
         let map  = maps.init(data)
         resolve(map)
       })

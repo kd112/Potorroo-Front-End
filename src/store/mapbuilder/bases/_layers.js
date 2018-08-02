@@ -69,8 +69,8 @@ class LayerBuilder {
             vectorSource.addFeatures(
               vectorSource.getFormat().readFeatures(xhr.responseText)
             );
-            vectorSource.forEachFeature(()=>{
-              
+            vectorSource.forEachFeature((feature)=>{
+              feature.overlay=()=>{console.log("overlay")}
             })
           } else {
             onError();

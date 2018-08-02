@@ -4,11 +4,13 @@ class Maps{
     constructor(){
 
     }
-    init(target){
+    init(target,overlay){
+        // console.log(overlay.getId)
         return new maps({
             target:target,
             layers:[],
-            view:null
+            view:null,
+            overlays:[overlay]
         })
         // console.log(map)
         // return map
