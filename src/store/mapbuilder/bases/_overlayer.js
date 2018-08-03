@@ -1,4 +1,11 @@
 import Overlay from 'ol/Overlay';
+import Style from "ol/style/Style";
+import Fill from "ol/style/Fill";
+import Stroke from "ol/style/Stroke";
+import color from 'ol/color';
+
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
 
 class OverLay {
     constructor(map,id) {
@@ -28,15 +35,20 @@ class OverLay {
 
         // console.log(this.Overlay.setPosition)
         // console.log(evt.map.overlays)
-        console.log(this.getOverlays())
-        this.getOverlays()[0].setPosition(undefined);
+        // console.log(this.getOverlays())
+        // this.Overlay.setPosition(undefined);
         let map = evt.map
        var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
         return feature;
         });
+        // console.log(feature)
         if (feature){
-            this.getOverlays()[0].getElement.innerHTML=`<p>Name:${feature.name_engli}</p>`
-            this.getOverlays()[0].setPosition(evt.coordinate)
+            console.log("id", feature.getProperties());
+            // console.log(feature);
+            // this.Overlay.getElement.innerHTML=`<p>Name:${feature.name_engli}</p>`
+            // console.log(evt.coordinate)
+            // this.Overlay.setPosition(evt.coordinate)
+            // map.addOverlay(this.Overlay)
             // feature.overlay()
         }
 
@@ -51,6 +63,27 @@ class OverLay {
             // console.log(feature.overlay())
         }
     }
+    createHoverStyle(feature){
+        // let new_feature = feature.clone()
+        return  new Style({
+        //   fill: new Fill({
+        //     color: "rgba(255, 255, 255, 0.14)"
+        //   }),
+          stroke:new Stroke({
+            color: "#000000",
+            width: 1
+          })
+        });
+        // new_feature.setStyle(hoverStyle);
+        // return new_feature;
+        // return hoverStyle;
+
+    }
+    // _hoverLayer(feature){
+    //     return new VectorLayer({
+    //         source:this.
+    //     })
+    // }
 }
 
 

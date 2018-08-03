@@ -66,11 +66,13 @@ class LayerBuilder {
         xhr.onerror = onError;
         xhr.onload = function() {
           if (xhr.status == 200) {
+            // console.log(xhr.responseText);
             vectorSource.addFeatures(
               vectorSource.getFormat().readFeatures(xhr.responseText)
             );
             vectorSource.forEachFeature((feature)=>{
-              feature.overlay=()=>{console.log("overlay")}
+              // console.log();
+              feature.overlay = () => { console.log(xhr.responseText)}
             })
           } else {
             onError();
@@ -101,6 +103,14 @@ class LayerBuilder {
           })
         })
       }
+  }
+  findFeature(evt){
+    let feature = evt.map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+      return feature;
+    });
+    console.log(feature)
+    return feature
+    
   }
 }
 

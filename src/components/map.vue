@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="pa-0" fill-height>
-        <div ref="overlay"></div>
+        <div id="overlay" ref="overlay"></div>
         <v-flex id="map" fill-height>
 
         </v-flex>
@@ -40,7 +40,9 @@
      mounted(){
          this.isloading=true
         //  this.maps = await this.$store.dispatch('buildMap',123123)
-         this.$store.dispatch('buildMap',123123,this.$refs.overlay).then((map)=>{
+        let overlay = this.$refs.overlay
+        // console.log(overlay)
+         this.$store.dispatch('buildMap',{id:123123,overlay:this.$refs.overlay}).then((map)=>{
             //  return new Promise((resolve,reject)=>{
                  this.maps = map
                 //  resolve()
@@ -59,12 +61,16 @@
  </script>
  
  <style scoped>
-    /* #map{
-        position: relative;
-        left:5%;
-        bottom:-5%;
-        height: 100%;
-        width: 100%;
-    } */
+   #overlay{
+       background-color: white;
+        width: 115px;
+        padding: 10px;
+        border: 2px solid white;
+        border-radius: 15px;
+        -moz-border-radius: 15px;
+        color:grey;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+   }
  </style>
  
