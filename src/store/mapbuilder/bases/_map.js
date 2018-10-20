@@ -10,7 +10,7 @@ class Maps{
             target:target,
             layers:[],
             view:null,
-            overlays:[overlay]
+            // overlays:[overlay]
         })
         // console.log(map)
         // return map
