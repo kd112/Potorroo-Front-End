@@ -9,7 +9,7 @@ class Api {
   create (customHeader) {
     let headers = Object.assign({},customHeader)
     return axios.create({
-      baseURL: 'http://localhost:5000',
+      baseURL: '/',
       headers: headers
     })
   }

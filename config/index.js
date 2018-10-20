@@ -28,6 +28,14 @@ module.exports = {
           console.log(url)
           return url
         }
+      },
+      '*':{
+        target:"http://localhost:5000",
+        // toProxy:true,
+        pathRewrite:(path,req)=>{
+          console.log(path)
+          return path
+        }
       }
     },
 
